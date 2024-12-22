@@ -151,14 +151,15 @@
             const blankPercent = total > 0 ? ((blankCount / total) * 100).toFixed(2) : 0;
             document.getElementById('livePercent').innerText = livePercent;
             document.getElementById('blankPercent').innerText = blankPercent;
-
+        
             const shootDecision = document.getElementById('shootDecision');
             if (livePercent > blankPercent) {
                 shootDecision.innerText = 'SHOOT: THE ENEMY';
             } else if (blankPercent > livePercent) {
                 shootDecision.innerText = 'SHOOT: YOURSELF';
             } else {
-                shootDecision.innerText = 'SHOOT: ?';
+                // When percentages are equal
+                shootDecision.innerText = 'SHOOT: YOURSELF';
             }
         }
 
