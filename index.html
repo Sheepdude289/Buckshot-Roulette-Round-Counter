@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buckshot Roulette Round Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(to bottom, red, darkred);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        header {
+            background: linear-gradient(to bottom, #444, #222);
+            color: white;
+            padding: 10px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        }
+        header img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .counter {
+            margin: 20px auto;
+            padding: 20px;
+            width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, #444, #222);
+            border: 1px solid #666;
+        }
+        .counter h2 {
+            margin: 0 0 10px;
+        }
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .counter button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #666, #333);
+            border: 1px solid #999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            color: white;
+        }
+        .counter span {
+            font-size: 20px;
+            margin: 0 10px;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #555, #222);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+        .stats {
+            margin-top: 20px;
+            font-size: 14px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .stats p {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #444, #222);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .fisheye {
+            transform: perspective(800px) scale(1.01);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<link rel="icon" href="ICONS/buckshot_icon.png" type="image/png">
+</head>
+<body class="fisheye">
+    <header>
+        <img src="ICONS/buckshot_icon.png" alt="Logo">
+        <h1>Buckshot Roulette Round Counter</h1>
+    </header>
+
+    <div class="counter">
+        <h2>LIVE</h2>
+        <div class="counter-controls">
+            <button onclick="decrementLive()">-</button>
+            <span id="liveCount">0</span>
+            <button onclick="incrementLive()">+</button>
+        </div>
+    </div>
+
+    <div class="counter">
+        <h2>BLANK</h2>
+        <div class="counter-controls">
+            <button onclick="decrementBlank()">-</button>
+            <span id="blankCount">0</span>
+            <button onclick="incrementBlank()">+</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <p>Possibility of next round being LIVE: <span id="livePercent">0.00</span>%</p>
+        <p>Possibility of next round being BLANK: <span id="blankPercent">0.00</span>%</p>
+    </div>
+
+    <script>
+        let liveCount = 0;
+        let blankCount = 0;
+
+        function updatePercentages() {
+            const total = liveCount + blankCount;
+            const livePercent = total > 0 ? ((liveCount / total) * 100).toFixed(2) : 0;
+            const blankPercent = total > 0 ? ((blankCount / total) * 100).toFixed(2) : 0;
+            document.getElementById('livePercent').innerText = livePercent;
+            document.getElementById('blankPercent').innerText = blankPercent;
+        }
+
+        function incrementLive() {
+            liveCount++;
+            document.getElementById('liveCount').innerText = liveCount;
+            updatePercentages();
+        }
+
+        function decrementLive() {
+            if (liveCount > 0) {
+                liveCount--;
+                document.getElementById('liveCount').innerText = liveCount;
+                updatePercentages();
+            }
+        }
+
+        function incrementBlank() {
+            blankCount++;
+            document.getElementById('blankCount').innerText = blankCount;
+            updatePercentages();
+        }
+
+        function decrementBlank() {
+            if (blankCount > 0) {
+                blankCount--;
+                document.getElementById('blankCount').innerText = blankCount;
+                updatePercentages();
+            }
+        }
+    </script>
+</body>
+</html>
