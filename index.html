@@ -91,12 +91,22 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
             color: white;
         }
+        .shoot-decision {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #333, #111);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        }
         .fisheye {
             transform: perspective(800px) scale(1.01);
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="icon" href="ICONS/buckshot_icon.png" type="image/png">
+    <link rel="icon" href="ICONS/buckshot_icon.png" type="image/png">
 </head>
 <body class="fisheye">
     <header>
@@ -127,6 +137,10 @@
         <p>Possibility of next round being BLANK: <span id="blankPercent">0.00</span>%</p>
     </div>
 
+    <div class="shoot-decision" id="shootDecision">
+        SHOOT: ?
+    </div>
+
     <script>
         let liveCount = 0;
         let blankCount = 0;
@@ -137,6 +151,15 @@
             const blankPercent = total > 0 ? ((blankCount / total) * 100).toFixed(2) : 0;
             document.getElementById('livePercent').innerText = livePercent;
             document.getElementById('blankPercent').innerText = blankPercent;
+
+            const shootDecision = document.getElementById('shootDecision');
+            if (livePercent > blankPercent) {
+                shootDecision.innerText = 'SHOOT: THE ENEMY';
+            } else if (blankPercent > livePercent) {
+                shootDecision.innerText = 'SHOOT: YOURSELF';
+            } else {
+                shootDecision.innerText = 'SHOOT: ?';
+            }
         }
 
         function incrementLive() {
