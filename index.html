@@ -101,6 +101,11 @@
             color: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
         }
+        .shoot-decision span {
+            display: block;
+            font-size: 16px;
+            margin-top: 5px;
+        }
         .fisheye {
             transform: perspective(800px) scale(1.01);
         }
@@ -137,8 +142,9 @@
         <p>Possibility of next round being BLANK: <span id="blankPercent">0.00</span>%</p>
     </div>
 
-    <div class="shoot-decision" id="shootDecision">
-        SHOOT: ?
+    <div class="shoot-decision">
+        <span id="shootDecision">SHOOT: ?</span>
+        <span id="failurePossibility">Possibility of failure: 0.00%</span>
     </div>
 
     <script>
@@ -151,15 +157,19 @@
             const blankPercent = total > 0 ? ((blankCount / total) * 100).toFixed(2) : 0;
             document.getElementById('livePercent').innerText = livePercent;
             document.getElementById('blankPercent').innerText = blankPercent;
-        
+
             const shootDecision = document.getElementById('shootDecision');
+            const failurePossibility = document.getElementById('failurePossibility');
+
             if (livePercent > blankPercent) {
                 shootDecision.innerText = 'SHOOT: THE ENEMY';
+                failurePossibility.innerText = `Possibility of failure: ${blankPercent}%`;
             } else if (blankPercent > livePercent) {
                 shootDecision.innerText = 'SHOOT: YOURSELF';
+                failurePossibility.innerText = `Possibility of failure: ${livePercent}%`;
             } else {
-                // When percentages are equal
                 shootDecision.innerText = 'SHOOT: YOURSELF';
+                failurePossibility.innerText = `Possibility of failure: ${livePercent}%`;
             }
         }
 
